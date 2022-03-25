@@ -1,0 +1,27 @@
+metadata:
+    name: fleetwide-config
+    format: "Manual Test Definition 1.0"
+    description: "Test for applying fleetwide configuration"
+    maintainer:
+        - brendan.wood@foundires.io
+    os:
+        - ubuntu
+        - openembedded
+    scope:
+        - functional
+    devices:
+        - 
+    environment:
+        - manual-test
+
+run:
+    steps:
+        - create factory fleetwide config setting containing "fleet"
+          run "fioctl config set --reason "for testing" -f <factory> testing-config=fleet"
+        - boot up device 
+        - run "lmp-device-register -n<name>"
+        - check config cd /run/secrets/ 
+                       
+    expected:
+       - testing-config file is present in /run/secrets/
+       - testing-config contains "fleet"

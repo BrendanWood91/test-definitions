@@ -1,0 +1,28 @@
+metadata:
+    name: lmp-device-register-invalid-token-header
+    format: "Manual Test Definition 1.0"
+    description: "Register device with token header mismatch"
+    maintainer:
+        - brendan.wood@foundires.io
+    os:
+        - ubuntu
+        - openembedded
+    scope:
+        - functional
+    devices:
+        - 
+    environment:
+        - manual-test
+
+run:
+    steps:
+        - create valid api token on app.foundries.io with "devices:create" for <factory>
+        - boot up the device
+        - ensure device is not registered to a factory 
+          check /var/sota/sql.db  is not present on device
+        - run "lmp-device-register -T<valid-api-token> -H FOO-Token -n<name>"   
+                       
+    expected:
+       - Device should not register
+       - Failure to authenticate
+       - expected error  Unable to create device  HTTP_401 Authorization Required

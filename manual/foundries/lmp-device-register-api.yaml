@@ -1,0 +1,26 @@
+metadata:
+    name: lmp-device-register-api
+    format: "Manual Test Definition 1.0"
+    description: "Register device via specified api token"
+    maintainer:
+        - brendan.wood@foundires.io
+    os:
+        - ubuntu
+        - openembedded
+    scope:
+        - functional
+    devices:
+        - 
+    environment:
+        - manual-test
+
+run:
+    steps:
+        - boot up the device
+        - ensure device is not registered to a factory 
+          check /var/sota/sql.db  is not present on device
+        - create valid api token on app.foundries.io with "devices:create" for <factory>
+        - run "lmp-device-register -T<valid-api-token> -n<name>"          
+                       
+    expected:
+       - Device should register normally

@@ -1,0 +1,32 @@
+metadata:
+    name: lmp-device-register-invalid-app
+    format: "Manual Test Definition 1.0"
+    description: "Register device and enable app that isn't present in containers.git"
+    maintainer:
+        - brendan.wood@foundires.io
+    os:
+        - ubuntu
+        - openembedded
+    scope:
+        - functional
+    devices:
+        - 
+    environment:
+        - manual-test
+
+run:
+    steps:
+        - boot up the device
+        - ensure device is not registered to a factory 
+          check /var/sota/sql.db  is not present on device
+        - register app which is not defined in containers.git
+          run "lmp-device-register -apps<invalid-appname> -n<name>"
+        - authenticate device with user code in browser   
+        - Verify  no apps are enabled on device
+          run "fioctl devices list -f <factory>"
+          run "docker ps" on device 
+                       
+    expected:
+       - device should register normally       
+       - specifying a specifc app which does not exist during registration overrides default to enable all apps
+       - no apps should be available on device

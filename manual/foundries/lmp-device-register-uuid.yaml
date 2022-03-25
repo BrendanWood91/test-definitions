@@ -1,0 +1,29 @@
+metadata:
+    name: lmp-device-register-uuid
+    format: "Manual Test Definition 1.0"
+    description: "Register a new device with an existing uuid"
+    maintainer:
+        - brendan.wood@foundires.io
+    os:
+        - ubuntu
+        - openembedded
+    scope:
+        - functional
+    devices:
+        - 
+    environment:
+        - manual-test
+
+run:
+    steps:
+        - boot up the device
+        - ensure device is registered to a factory 
+          check /var/sota/sql.db  is present on device
+        - copy existing uuid from app.foundries.io factory>device
+        - delete /var/sota/sql.db on device
+        - run "lmp-device-register - u <existing UUID>"
+                       
+    expected:
+       - Device should not be able to register 
+       - expected error - Unable to create device HTTP_409
+       - message Conflict /ota/devices/?   
